@@ -19,6 +19,13 @@
 # Project setup
 
 start server in development mode:
-```
+```console
 uvicorn app:app --reload --host 0.0.0.0 --port 8000
+```
+
+
+Db-migrations:
+```console
+alembic revision --autogenerate -m "commit message"
+alembic upgrade head
 ```

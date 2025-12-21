@@ -1,0 +1,1 @@
+from snoot.database.model.user import UserModel

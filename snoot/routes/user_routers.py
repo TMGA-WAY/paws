@@ -1,24 +1,15 @@
 from fastapi import APIRouter, HTTPException
-from typing import List
-from snoot.model.user import User
+from snoot.schema.user import UserInput
+from snoot.service import user_service
+
+# from snoot.model.user import User
 
 router = APIRouter()
 
-# Dummy in-memory DB
-users_db: List[User] = []
 
-@router.get("/", response_model=List[User])
-def get_all_users():
-    return users_db
 
-@router.get("/{user_id}", response_model=User)
-def get_user(user_id: int):
-    for user in users_db:
-        if user.id == user_id:
-            return user
-    raise HTTPException(status_code=404, detail="User not found")
 
-@router.post("/", response_model=User)
-def create_user(user: User):
-    users_db.append(user)
-    return user
+@router.post("/")
+async def create_user(body: UserInput):
+    return user_service.create_user(body)
+
