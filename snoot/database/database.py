@@ -5,7 +5,7 @@ import sqlalchemy
 
 from sqlalchemy import create_engine
 
-ENGINE = os.environ.get("sqlalchemy-engine")
+ENGINE = os.environ.get("SQLALCHEMY_DATABASE_URL")
 engine = create_engine(ENGINE)
 
 
@@ -33,7 +33,7 @@ def pandas_to_sql(df, table_name: str, if_exists: str = "append", index=False):
     :param index: Whether to write DataFrame index as a column
     """
     with engine.connect() as con:
-        df.to_sql(con=con, name=table_name, if_exists=if_exists, index=index)
+        df.to_sql(con=con, name=table_name, if_exists=if_exists, index=index, method='multi')
 
 
 def sql_update(table_name: str = None, where: dict = None, values: dict = None, query: str = None):
