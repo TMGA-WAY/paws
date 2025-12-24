@@ -7,8 +7,6 @@ from snoot.service import user_service
 router = APIRouter()
 
 
-
-
 @router.post("/")
 async def create_user(body: UserInput):
     return user_service.create_user(body)
