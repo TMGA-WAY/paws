@@ -1,4 +1,5 @@
 import os
+import traceback
 
 import pandas as pd
 import sqlalchemy
@@ -32,8 +33,12 @@ def pandas_to_sql(df, table_name: str, if_exists: str = "append", index=False):
     :param if_exists: Behavior when the table already exists. Options are 'fail', 'replace', 'append'
     :param index: Whether to write DataFrame index as a column
     """
-    with engine.connect() as con:
-        df.to_sql(con=con, name=table_name, if_exists=if_exists, index=index, method='multi')
+    try:
+        with engine.connect() as con:
+            df.to_sql(con=con, name=table_name, if_exists=if_exists, index=index, method='multi')
+    except Exception as e:
+        print("ERROR:", traceback.format_exc())
+        raise RuntimeError("Error writing DataFrame to SQL") from e
 
 
 def sql_update(table_name: str = None, where: dict = None, values: dict = None, query: str = None):

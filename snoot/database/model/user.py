@@ -17,6 +17,7 @@ class UserModel(BaseModel):
     last_name: Mapped[str] = mapped_column(String(60), nullable=False, comment="The last name of the user")
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False,
                                        comment="The email address of the user")
+
     phone: Mapped[str] = mapped_column(String(13), unique=True, nullable=True,
                                        comment="The phone number of the user")
     date_of_birth: Mapped[Date] = mapped_column(Date, nullable=False, comment="The date of birth of the user")
