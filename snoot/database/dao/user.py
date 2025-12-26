@@ -31,8 +31,8 @@ class User:
             last_user_id = int(df.loc[0, "user_id"]) if not df.empty else 0
 
             df = pd.DataFrame(
-                columns=["user_id", "active", "first_name", "last_name", "email", "phone", "date_of_birth", "gender",
-                         "created_at"],
+                columns=["user_id", "active", "first_name", "last_name", "email", "phone", "date_of_birth", "gender","profile_picture_url",
+                         "created_at", "updated_at"],
                 data=[[last_user_id + 1,
                        False,
                        user_data.get("first_name"),
@@ -41,7 +41,9 @@ class User:
                        user_data.get("phone"),
                        user_data.get("date_of_birth"),
                        user_data.get("gender"),
-                       pd.Timestamp.now(tz="Asia/Kolkata")
+                       None,
+                       pd.Timestamp.now(tz="Asia/Kolkata"),
+                       None
                        ]]
             )
             database.pandas_to_sql(df, table_name)

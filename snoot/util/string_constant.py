@@ -1,1 +1,2 @@
 USER_TABLE_NAME = "user"
+PET_TABLE_NAME = "pet"
