@@ -30,20 +30,29 @@ class User:
 
             last_user_id = int(df.loc[0, "user_id"]) if not df.empty else 0
 
-            df = pd.DataFrame(
-                columns=["user_id", "active", "first_name", "last_name", "email", "phone", "date_of_birth", "gender",
-                         "created_at"],
-                data=[[last_user_id + 1,
-                       False,
-                       user_data.get("first_name"),
-                       user_data.get("last_name"),
-                       user_data.get("email"),
-                       user_data.get("phone"),
-                       user_data.get("date_of_birth"),
-                       user_data.get("gender"),
-                       pd.Timestamp.now(tz="Asia/Kolkata")
-                       ]]
-            )
+            # df = pd.DataFrame(
+            #     columns=["user_id", "active", "first_name", "last_name", "email", "phone", "date_of_birth", "gender",
+            #              "created_at"],
+            #     data=[[last_user_id + 1,
+            #            False,
+            #            user_data.get("first_name"),
+            #            user_data.get("last_name"),
+            #            user_data.get("email"),
+            #            user_data.get("phone"),
+            #            user_data.get("date_of_birth"),
+            #            user_data.get("gender"),
+            #            pd.Timestamp.now(tz="Asia/Kolkata")
+            #            ]]
+            # )
+            
+            # class object to pandas dataframe conversion
+            user_record = {
+                "user_id": last_user_id + 1,
+                "active": False,
+                "created_at": pd.Timestamp.now(tz="Asia/Kolkata"),
+                **user_data
+            }
+            df = pd.DataFrame([user_record])
             database.pandas_to_sql(df, table_name)
 
             return cls(user_id=last_user_id + 1)
